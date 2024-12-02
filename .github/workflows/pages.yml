@@ -1,0 +1,59 @@
+name: Deploy to Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+env:
+  DENO_DIR: ${{ github.workspace }}/.deno
+
+jobs:
+  # Single deploy job since we're just deploying
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+
+      - uses: actions/cache/restore@v4
+        id: cache
+        with:
+          path: ${{ env.DENO_DIR }}
+          key: cache-${{ runner.os }}-test-${{ hashFiles('deno.lock') }}
+          restore-keys: cache-${{ runner.os }}
+
+      - name: Build
+        run: deno task build
+
+      - uses: actions/cache/save@v4
+        with:
+          path: ${{ env.DENO_DIR }}
+          key: ${{ steps.cache.outputs.cache-primary-key }}
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./dist"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
