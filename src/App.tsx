@@ -3,9 +3,9 @@ import { createQuery } from "@tanstack/solid-query"
 import { useNavigate, useParams } from "@solidjs/router"
 import { Gallery } from "./components/Gallery.tsx"
 import { Time } from "./components/Time.tsx"
-import "./App.css"
-import { GitHubIcon, SocialLink } from "./components/SocialIcon.tsx"
 import { queryImages } from "./fetch.ts"
+import { Header } from "./components/Header.tsx"
+import "./App.css"
 
 export default function App() {
   const params = useParams<{ owner?: string; repo?: string; tree?: string }>()
@@ -34,8 +34,8 @@ export default function App() {
   const handleSubmit = (e: Event) => {
     e.preventDefault()
     if (repoQuery.isSuccess) {
-        repoQuery.refetch()
-        return
+      repoQuery.refetch()
+      return
     }
 
     const form = e.currentTarget as HTMLFormElement
@@ -51,17 +51,7 @@ export default function App() {
 
   return (
     <main class="container">
-      <header>
-        <h1>GitSplash</h1>
-        <section>
-          <p>Convert any GitHub repository into an image gallery</p>
-          <SocialLink
-            href="https://github.com/scarf005/gitsplash"
-            title="project repository"
-          >
-            <GitHubIcon />
-          </SocialLink>
-        </section>
+      <Header>
         <div class="rate-limit-info">
           <span>Rate Limit Remaining: {repoQuery.data?.rateLimitRemaining}</span>
           <span>
@@ -72,7 +62,7 @@ export default function App() {
               )}
           </span>
         </div>
-      </header>
+      </Header>
 
       <form onSubmit={handleSubmit} class="search-form">
         <div class="form-group">
@@ -107,12 +97,12 @@ export default function App() {
           <Switch fallback={<button type="submit">Load Images</button>}>
             <Match when={repoQuery.isSuccess}>
               <button type="submit">Reload Images</button>
+              <p>
+                last fetched at:{" "}
+                {repoQuery.dataUpdatedAt ? <Time time={new Date(repoQuery.dataUpdatedAt)} /> : "-"}
+              </p>
             </Match>
           </Switch>
-          <p>
-            last fetched at:{" "}
-            {repoQuery.dataUpdatedAt ? <Time time={new Date(repoQuery.dataUpdatedAt)} /> : "-"}
-          </p>
         </div>
       </form>
 
