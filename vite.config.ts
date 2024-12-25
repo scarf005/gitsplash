@@ -6,5 +6,4 @@ import devtools from "solid-devtools/vite"
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [deno(), solid(), devtools()],
-  base: "/gitsplash/",
 })

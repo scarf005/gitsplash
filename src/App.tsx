@@ -90,7 +90,7 @@ export default function App() {
     const [owner, repo] = path.split("/")
 
     if (owner && repo) {
-      navigate(`/gitsplash/${owner}/${repo}${tree !== "main" ? `/tree/${tree}` : ""}`)
+      navigate(`/${owner}/${repo}${tree !== "main" ? `/tree/${tree}` : ""}`)
     }
   }
 

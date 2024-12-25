@@ -34,9 +34,9 @@ persistQueryClient({
 const root = document.getElementById("root")
 
 const routes = [
-  { path: "/gitsplash/", component: App },
-  { path: "/gitsplash/:owner/:repo", component: App },
-  { path: "/gitsplash/:owner/:repo/tree/:tree", component: App },
+  { path: "/", component: App },
+  { path: "/:owner/:repo", component: App },
+  { path: "/:owner/:repo/tree/:tree", component: App },
 ]
 
 render(
