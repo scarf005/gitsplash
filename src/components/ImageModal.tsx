@@ -22,23 +22,6 @@ export function ImageModal(props: Props) {
     }, { once: true })
   }
 
-  //   let originalOverflow: string | null = null
-
-  //   createEffect(() => {
-  //     if (props.isOpen) {
-  //       originalOverflow = document.body.style.overflow
-  //       document.body.style.overflow = "hidden"
-  //     } else if (originalOverflow !== null) {
-  //       document.body.style.overflow = originalOverflow
-  //     }
-  //   })
-
-  //   onCleanup(() => {
-  //     if (originalOverflow !== null) {
-  //       document.body.style.overflow = originalOverflow
-  //     }
-  //   })
-
   return (
     <Show when={props.image}>
       <Portal>
