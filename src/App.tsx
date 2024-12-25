@@ -1,86 +1,35 @@
-import { Octokit } from "@octokit/rest"
-import { createMemo, createSignal, Match, Show, Switch } from "solid-js"
+import { createSignal, Match, Switch } from "solid-js"
 import { createQuery } from "@tanstack/solid-query"
 import { useNavigate, useParams } from "@solidjs/router"
 import { Gallery } from "./components/Gallery.tsx"
-import type { ImageGroup } from "./types.ts"
 import { Time } from "./components/Time.tsx"
 import "./App.css"
 import { GitHubIcon, SocialLink } from "./components/SocialIcon.tsx"
+import { queryImages } from "./fetch.ts"
 
 export default function App() {
   const params = useParams<{ owner?: string; repo?: string; tree?: string }>()
   const navigate = useNavigate()
   const [token, setToken] = createSignal<string | null>(null)
-  const [rateLimitRemaining, setRateLimitRemaining] = createSignal<number | null>(null)
-  const [rateLimitReset, setRateLimitReset] = createSignal<Date | null>(null)
   const [columnCount, setColumnCount] = createSignal(4)
 
   const repoQuery = createQuery(() => ({
     queryKey: ["owner", params.owner, "repo", params.repo, "tree", params.tree, "token", token()],
-    queryFn: async () => {
+    queryFn: () => {
       if (!params.owner || !params.repo) {
         throw new Error("Please provide repository path in format 'owner/repo'")
       }
-
-      const octokit = new Octokit({ auth: token() })
-
-      const { data, headers } = await octokit.rest.git.getTree(
-        {
-          owner: params.owner,
-          repo: params.repo,
-          tree_sha: params.tree || "main",
-          recursive: "true",
-          headers: {
-            "X-GitHub-Api-Version": "2022-11-28",
-          },
-        },
-      )
-      return { data, headers }
+      return queryImages({
+        owner: params.owner,
+        repo: params.repo,
+        tree_sha: params.tree || "main",
+        auth: token(),
+      })
     },
     enabled: Boolean(params.owner && params.repo),
     initialData: undefined,
   }))
-
-  // Transform raw data into image groups
-  const imageGroups = createMemo(() => {
-    if (!repoQuery.data?.data?.tree) return new Map<string, ImageGroup>()
-
-    const { data, headers } = repoQuery.data
-
-    // Update rate limit info
-    if (headers) {
-      setRateLimitRemaining(
-        headers["x-ratelimit-remaining"] ? Number(headers["x-ratelimit-remaining"]) : null,
-      )
-      setRateLimitReset(
-        headers["x-ratelimit-reset"] ? new Date(Number(headers["x-ratelimit-reset"]) * 1000) : null,
-      )
-    }
-
-    const groups = new Map<string, ImageGroup>()
-
-    for (const file of data.tree) {
-      if (!file.path || !file.sha || typeof file.path !== "string") continue
-      if (!/\.(jpg|jpeg|png|gif|webp|svg)$/i.test(file.path)) continue
-
-      const url = `https://raw.githubusercontent.com/${params.owner}/${params.repo}/${
-        params.tree || "main"
-      }/${file.path}`
-
-      const existing = groups.get(file.sha)
-      if (existing) {
-        existing.paths.add(file.path)
-      } else {
-        groups.set(file.sha, {
-          url,
-          paths: new Set([file.path]),
-        })
-      }
-    }
-
-    return groups
-  })
+  console.log(repoQuery.data)
 
   const handleSubmit = (e: Event) => {
     e.preventDefault()
@@ -109,12 +58,13 @@ export default function App() {
           </SocialLink>
         </section>
         <div class="rate-limit-info">
-          <span>Rate Limit Remaining: {rateLimitRemaining()}</span>
+          <span>Rate Limit Remaining: {repoQuery.data?.rateLimitRemaining}</span>
           <span>
-            Rate Limit Reset:{"  "}
-            <Switch fallback="-">
-              <Match when={rateLimitReset()}>{(reset) => <Time time={reset()} />}</Match>
-            </Switch>
+            Rate Limit Reset:{"  "}{repoQuery.data?.rateLimitReset instanceof Date
+              ? <Time time={repoQuery.data?.rateLimitReset} />
+              : (
+                "-"
+              )}
           </span>
         </div>
       </header>
@@ -153,24 +103,24 @@ export default function App() {
         </div>
       </form>
 
-      <Show when={repoQuery.error}>
-        <div class="error">{(repoQuery.error as Error).message}</div>
-      </Show>
-
-      <Show when={repoQuery.isLoading}>
-        <div class="loading">Loading images...</div>
-      </Show>
-
-      <Show when={!repoQuery.isLoading}>
-        <Gallery
-          images={imageGroups()}
-          repoUrl={params.owner && params.repo
-            ? `https://github.com/${params.owner}/${params.repo}`
-            : ""}
-          branch={params.tree || "main"}
-          columnCount={columnCount()}
-        />
-      </Show>
+      <Switch>
+        <Match when={repoQuery.isError}>
+          <div class="error">{(repoQuery.error as Error).message}</div>
+        </Match>
+        <Match when={repoQuery.isFetching}>
+          <div class="loading">Loading images...</div>
+        </Match>
+        <Match when={repoQuery.isSuccess}>
+          <Gallery
+            images={repoQuery.data?.groups ?? new Map()}
+            repoUrl={params.owner && params.repo
+              ? `https://github.com/${params.owner}/${params.repo}`
+              : ""}
+            branch={params.tree || "main"}
+            columnCount={columnCount()}
+          />
+        </Match>
+      </Switch>
     </main>
   )
 }

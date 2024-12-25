@@ -2,6 +2,8 @@
   "version": "4",
   "specifiers": {
     "jsr:@std/datetime@~0.225.2": "0.225.2",
+    "jsr:@valibot/valibot@*": "0.42.1",
+    "jsr:@valibot/valibot@~0.42.1": "0.42.1",
     "npm:@deno/vite-plugin@1": "1.0.0_vite@5.4.11",
     "npm:@solidjs/router@*": "0.15.1_solid-js@1.9.3__seroval@1.1.1",
     "npm:@tanstack/query-persist-client-core@^5.62.0": "5.62.0",
@@ -20,6 +22,9 @@
   "jsr": {
     "@std/datetime@0.225.2": {
       "integrity": "45f0100554a912cd65f48089ef0a33aa1eb6ea21f08090840b539ab582827eaa"
+    },
+    "@valibot/valibot@0.42.1": {
+      "integrity": "ba0f6f7964aaeec0e4b1f793d575061f325ae6254cbb9d7ff01fb65068a0a23b"
     }
   },
   "npm": {
@@ -1528,6 +1533,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@std/datetime@~0.225.2",
+      "jsr:@valibot/valibot@~0.42.1",
       "npm:@deno/vite-plugin@1",
       "npm:@solidjs/router@*",
       "npm:@tanstack/query-persist-client-core@^5.62.0",

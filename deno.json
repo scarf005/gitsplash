@@ -22,6 +22,7 @@
         "@octokit/rest": "https://esm.sh/@octokit/rest@21.0.2",
         "@deno/vite-plugin": "npm:@deno/vite-plugin@^1.0.0",
         "@std/datetime": "jsr:@std/datetime@^0.225.2",
+        "@valibot/valibot": "jsr:@valibot/valibot@^0.42.1",
         "solid-js": "npm:solid-js@^1.9.2",
         "@solidjs/router": "npm:@solidjs/router",
         "solid-devtools": "npm:solid-devtools@^0.30.1",
