@@ -20,13 +20,9 @@ export function Gallery(props: Props) {
 
   return (
     <>
-      <div 
-        class="gallery" 
-        style={{ 
-          "columns": props.columnCount.toString(),
-          "column-gap": "1.5rem",
-          "padding": "0 1rem"
-        }}
+      <div
+        class="gallery"
+        style={{ "--columns": props.columnCount }}
       >
         <For each={Array.from(props.images.values())}>
           {(image) => (
