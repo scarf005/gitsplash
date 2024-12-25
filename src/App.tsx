@@ -6,6 +6,7 @@ import { Gallery } from "./components/Gallery.tsx"
 import type { ImageGroup } from "./types.ts"
 import { Time } from "./components/Time.tsx"
 import "./App.css"
+import { GitHubIcon, SocialLink } from "./components/SocialIcon.tsx"
 
 export default function App() {
   const params = useParams<{ owner?: string; repo?: string; tree?: string }>()
@@ -98,7 +99,15 @@ export default function App() {
     <main class="container">
       <header>
         <h1>GitSplash</h1>
-        <p>Convert any GitHub repository into an image gallery</p>
+        <section>
+          <p>Convert any GitHub repository into an image gallery</p>
+          <SocialLink
+            href="https://github.com/scarf005/gitsplash"
+            title="project repository"
+          >
+            <GitHubIcon />
+          </SocialLink>
+        </section>
         <div class="rate-limit-info">
           <span>Rate Limit Remaining: {rateLimitRemaining()}</span>
           <span>
