@@ -1,11 +1,16 @@
 import * as v from "@valibot/valibot"
 import { Octokit, type RestEndpointMethodTypes } from "@octokit/rest"
-import type { ImageGroup } from "./types.ts"
 
 export const Integer = v.pipe(v.string(), v.transform(Number), v.integer())
 export const catchAll = <Input, Output, Issue extends v.BaseIssue<unknown>>(
   schema: v.BaseSchema<Input, Output, Issue>,
 ) => v.fallback(v.nullable(schema), null)
+
+export const ImageGroup = v.object({ url: v.string(), paths: v.set(v.string()) })
+export type ImageGroup = v.InferOutput<typeof ImageGroup>
+
+export const Images = v.fallback(v.map(v.string(), ImageGroup), () => new Map())
+type Images = v.InferOutput<typeof Images>
 
 export const queryImages = async (
   { auth, ...params }: RestEndpointMethodTypes["git"]["getTree"]["parameters"],

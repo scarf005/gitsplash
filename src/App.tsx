@@ -125,7 +125,7 @@ export default function App() {
         </Match>
         <Match when={repoQuery.isSuccess}>
           <Gallery
-            images={repoQuery.data?.groups ?? new Map()}
+            images={repoQuery.data?.groups}
             repoUrl={params.owner && params.repo
               ? `https://github.com/${params.owner}/${params.repo}`
               : ""}

@@ -1,6 +1,6 @@
 import { Portal } from "solid-js/web"
 import { createSignal, Show } from "solid-js"
-import type { ImageGroup } from "../types.ts"
+import type { ImageGroup } from "../fetch.ts"
 
 interface Props {
   image: ImageGroup | null

@@ -1,6 +1,6 @@
 import { createSignal, For, Show } from "solid-js"
 import { ImageModal } from "./ImageModal.tsx"
-import type { ImageGroup } from "../types.ts"
+import type { ImageGroup } from "../fetch.ts"
 
 interface Props {
   images: Map<string, ImageGroup>
