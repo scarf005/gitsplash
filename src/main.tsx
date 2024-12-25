@@ -17,7 +17,7 @@ const queryClient = new QueryClient({
       retry: false,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
-      refetchOnReconnect: false
+      refetchOnReconnect: false,
     },
   },
 })
@@ -45,7 +45,7 @@ render(
       <Router>
         {routes}
       </Router>
-      <SolidQueryDevtools />
+      <SolidQueryDevtools buttonPosition="bottom-left" />
     </QueryClientProvider>
   ),
   root!,
