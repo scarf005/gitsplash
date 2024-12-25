@@ -33,6 +33,11 @@ export default function App() {
 
   const handleSubmit = (e: Event) => {
     e.preventDefault()
+    if (repoQuery.isSuccess) {
+        repoQuery.refetch()
+        return
+    }
+
     const form = e.currentTarget as HTMLFormElement
     const formData = new FormData(form)
     const path = formData.get("repo") as string
@@ -99,7 +104,11 @@ export default function App() {
               onInput={(e) => setColumnCount(parseInt(e.currentTarget.value))}
             />
           </div>
-          <button type="submit">Load Images</button>
+          <Switch fallback={<button type="submit">Load Images</button>}>
+            <Match when={repoQuery.isSuccess}>
+              <button type="submit">Reload Images</button>
+            </Match>
+          </Switch>
           <p>
             last fetched at:{" "}
             {repoQuery.dataUpdatedAt ? <Time time={new Date(repoQuery.dataUpdatedAt)} /> : "-"}
