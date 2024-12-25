@@ -1,6 +1,8 @@
 {
   "version": "4",
   "specifiers": {
+    "jsr:@denostack/superserial@*": "0.3.5",
+    "jsr:@denostack/superserial@~0.3.5": "0.3.5",
     "jsr:@std/datetime@~0.225.2": "0.225.2",
     "jsr:@valibot/valibot@*": "0.42.1",
     "jsr:@valibot/valibot@~0.42.1": "0.42.1",
@@ -20,6 +22,9 @@
     "npm:vite@^5.4.9": "5.4.11"
   },
   "jsr": {
+    "@denostack/superserial@0.3.5": {
+      "integrity": "081019681862c8ae32dc8d754824ef967aa1f69138c7792517bf12163250aa08"
+    },
     "@std/datetime@0.225.2": {
       "integrity": "45f0100554a912cd65f48089ef0a33aa1eb6ea21f08090840b539ab582827eaa"
     },
@@ -1532,6 +1537,7 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@denostack/superserial@~0.3.5",
       "jsr:@std/datetime@~0.225.2",
       "jsr:@valibot/valibot@~0.42.1",
       "npm:@deno/vite-plugin@1",

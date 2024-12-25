@@ -19,6 +19,7 @@
         "jsxImportSource": "solid-js"
     },
     "imports": {
+        "@denostack/superserial": "jsr:@denostack/superserial@^0.3.5",
         "@octokit/rest": "https://esm.sh/@octokit/rest@21.0.2",
         "@deno/vite-plugin": "npm:@deno/vite-plugin@^1.0.0",
         "@std/datetime": "jsr:@std/datetime@^0.225.2",

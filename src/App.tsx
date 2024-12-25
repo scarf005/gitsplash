@@ -100,6 +100,10 @@ export default function App() {
             />
           </div>
           <button type="submit">Load Images</button>
+          <p>
+            last fetched at:{" "}
+            {repoQuery.dataUpdatedAt ? <Time time={new Date(repoQuery.dataUpdatedAt)} /> : "-"}
+          </p>
         </div>
       </form>
 
