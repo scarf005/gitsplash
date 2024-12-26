@@ -1,38 +1,38 @@
 {
-    "fmt": {
-        "semiColons": false,
-        "lineWidth": 100
-    },
-    "tasks": {
-        "dev": "deno run -A --node-modules-dir npm:vite",
-        "build": "deno run -A --node-modules-dir npm:vite build",
-        "preview": "deno run -A --node-modules-dir npm:vite preview",
-        "serve": "deno run --allow-net --allow-read jsr:@std/http@1/file-server dist/"
-    },
-    "compilerOptions": {
-        "lib": [
-            "ESNext",
-            "DOM",
-            "DOM.Iterable"
-        ],
-        "jsx": "react-jsx",
-        "jsxImportSource": "solid-js"
-    },
-    "imports": {
-        "@denostack/superserial": "jsr:@denostack/superserial@^0.3.5",
-        "@octokit/rest": "https://esm.sh/@octokit/rest@21.0.2",
-        "@deno/vite-plugin": "npm:@deno/vite-plugin@^1.0.0",
-        "@std/datetime": "jsr:@std/datetime@^0.225.2",
-        "@valibot/valibot": "jsr:@valibot/valibot@^0.42.1",
-        "solid-js": "npm:solid-js@^1.9.2",
-        "@solidjs/router": "npm:@solidjs/router",
-        "solid-devtools": "npm:solid-devtools@^0.30.1",
-        "@tanstack/solid-query": "npm:@tanstack/solid-query@^5.62.0",
-        "@tanstack/solid-query-devtools": "npm:@tanstack/solid-query-devtools@^5.62.0",
-        "@tanstack/solid-query-persist-client": "npm:@tanstack/solid-query-persist-client@^5.62.0",
-        "@tanstack/query-persist-client-core": "npm:@tanstack/query-persist-client-core@^5.62.0",
-        "@tanstack/query-sync-storage-persister": "npm:@tanstack/query-sync-storage-persister@^5.62.0",
-        "vite": "npm:vite@^5.4.9",
-        "vite-plugin-solid": "npm:vite-plugin-solid@^2.10.2"
-    }
+  "fmt": {
+    "semiColons": false,
+    "lineWidth": 100
+  },
+  "tasks": {
+    "dev": "deno run -A --node-modules-dir npm:vite",
+    "build": "deno run -A --node-modules-dir npm:vite build",
+    "preview": "deno run -A --node-modules-dir npm:vite preview",
+    "serve": "deno run --allow-net --allow-read jsr:@std/http@1/file-server dist/"
+  },
+  "compilerOptions": {
+    "lib": [
+      "ESNext",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "jsx": "react-jsx",
+    "jsxImportSource": "solid-js"
+  },
+  "imports": {
+    "@denostack/superserial": "jsr:@denostack/superserial@^0.3.5",
+    "@octokit/rest": "https://esm.sh/@octokit/rest@21.0.2",
+    "@deno/vite-plugin": "npm:@deno/vite-plugin@^1.0.0",
+    "@std/datetime": "jsr:@std/datetime@^0.225.2",
+    "@valibot/valibot": "jsr:@valibot/valibot@^0.42.1",
+    "solid-js": "npm:solid-js@^1.9.2",
+    "@solidjs/router": "npm:@solidjs/router",
+    "solid-devtools": "npm:solid-devtools@^0.30.1",
+    "@tanstack/solid-query": "npm:@tanstack/solid-query@^5.62.0",
+    "@tanstack/solid-query-devtools": "npm:@tanstack/solid-query-devtools@^5.62.0",
+    "@tanstack/solid-query-persist-client": "npm:@tanstack/solid-query-persist-client@^5.62.0",
+    "@tanstack/query-persist-client-core": "npm:@tanstack/query-persist-client-core@^5.62.0",
+    "@tanstack/query-sync-storage-persister": "npm:@tanstack/query-sync-storage-persister@^5.62.0",
+    "vite": "npm:vite@^5.4.9",
+    "vite-plugin-solid": "npm:vite-plugin-solid@^2.10.2"
+  }
 }
