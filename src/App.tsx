@@ -113,15 +113,17 @@ export default function App() {
         <Match when={repoQuery.isFetching}>
           <div class="loading">Loading images...</div>
         </Match>
-        <Match when={repoQuery.isSuccess}>
-          <Gallery
-            images={repoQuery.data?.groups}
-            repoUrl={params.owner && params.repo
-              ? `https://github.com/${params.owner}/${params.repo}`
-              : ""}
-            branch={params.tree || "main"}
-            columnCount={columnCount()}
-          />
+        <Match when={repoQuery.data}>
+          {(data) => (
+            <Gallery
+              images={data().groups}
+              repoUrl={params.owner && params.repo
+                ? `https://github.com/${params.owner}/${params.repo}`
+                : ""}
+              branch={params.tree || "main"}
+              columnCount={columnCount()}
+            />
+          )}
         </Match>
       </Switch>
     </main>
